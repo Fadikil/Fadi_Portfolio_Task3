@@ -1,0 +1,12 @@
+AOS.init({duration:1200,once:true});
+const text="Fadi Kildani Full Stack Developer";let i=0;function typing(){if(i<text.length){document.getElementById("typing").innerHTML+=text.charAt(i);i++;setTimeout(typing,40)}}typing();
+const sections=document.querySelectorAll("section");const navLinks=document.querySelectorAll(".nav-link");
+function revealSections(){let current="";sections.forEach(section=>{const rect=section.getBoundingClientRect();if(rect.top<window.innerHeight-50){section.style.opacity=1;section.style.transform="translateY(0)";current=section.id}else{section.style.opacity=1;section.style.transform="translateY(0)"}});
+navLinks.forEach(link=>{link.classList.remove("active");if(link.getAttribute("href")==="#"+current){link.classList.add("active")}})}
+window.addEventListener("scroll",revealSections);window.addEventListener("load",revealSections);
+function showTab(tab){document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));document.getElementById(tab).classList.add("active")}
+const glow=document.createElement("div");glow.classList.add("cursor-glow");document.body.appendChild(glow);
+document.addEventListener("mousemove",e=>{glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px";const parallaxCards=document.querySelectorAll(".parallax-layer");parallaxCards.forEach((layer,index)=>{layer.style.transform=`translate(${(e.clientX/window.innerWidth-0.5)*(index+1)*30}px,${(e.clientY/window.innerHeight-0.5)*(index+1)*30}px)`})});
+const canvas=document.getElementById("fireworks");canvas.width=window.innerWidth;canvas.height=window.innerHeight;canvas.style.position="fixed";canvas.style.top="0";canvas.style.left="0";canvas.style.zIndex="0";const ctx=canvas.getContext("2d");
+let particles=[];function createFirework(x,y){for(let i=0;i<50;i++){particles.push({x,y,dx:(Math.random()-0.5)*6,dy:(Math.random()-0.5)*6,alpha:1,color:`hsl(${Math.random()*360},100%,50%)`})}}
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="rgba(0,0,0,0.1)";ctx.fillRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.x+=p.dx;p.y+=p.dy;p.alpha-=0.02;ctx.fillStyle=p.color;ctx.globalAlpha=p.alpha;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();if(p.alpha<=0)particles.splice(i,1)});ctx.globalAlpha=1;requestAnimationFrame(animate)}animate();setInterval(()=>{createFirework(Math.random()*canvas.width,Math.random()*canvas.height/2)},1000);
